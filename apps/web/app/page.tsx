@@ -1,5 +1,9 @@
+import { SocketProvider } from "../context/SocketProvider"
+
 export default function Page(){
   return (
-    <p>Hello, there!</p>
+    <SocketProvider>
+      <p>Hello, there!</p>
+    </SocketProvider>
   )
 }
