@@ -1,9 +1,10 @@
 import { SocketProvider } from "../context/SocketProvider"
+import ChatInterface from "../components/ChatInterface"
 
 export default function Page(){
   return (
     <SocketProvider>
-      <p>Hello, there!</p>
+      <ChatInterface/>
     </SocketProvider>
   )
 }

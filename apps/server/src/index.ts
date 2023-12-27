@@ -11,11 +11,15 @@ const io = new Server(httpServer, {
 io.on("connection", (socket) => {
     console.log("User connected with id: ", socket.id);
     socket.on("disconnect", () => {
-        console.log("User disconnected.");
+        console.log("User disconnected with id: ", socket.id);
     });
+    socket.on("message", (incomingMessage) => {
+        console.log(incomingMessage);
+        socket.emit("message",incomingMessage);
+    })
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
 
 httpServer.listen(PORT, () =>
     console.log(`listening on port: http://localhost:${PORT}`)

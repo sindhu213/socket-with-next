@@ -2,10 +2,7 @@
 
 import { io, Socket} from "socket.io-client";
 import { useContext, createContext, useEffect, useState } from "react";
-
-interface ISocketContext {
-    socket: undefined | Socket;
-}
+import { ISocketContext } from "../lib/definitions";
 
 const SocketContext = createContext<ISocketContext>({socket:undefined});
 
@@ -18,7 +15,7 @@ export function SocketProvider(
 ) {
     let [socket, setSocket] = useState<Socket | undefined>(undefined);
     useEffect(() => {
-        const newSocket = io("http://localhost:5000");
+        const newSocket = io("http://localhost:8000");
         setSocket(newSocket);
         return () => {
             newSocket.disconnect();
