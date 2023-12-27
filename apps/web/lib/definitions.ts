@@ -1,5 +1,6 @@
 import { Socket } from "socket.io-client";
+
 export interface ISocketContext {
-    socket: undefined | Socket;
-    messages ?: string[]
+    socket: Socket | undefined,
+    messageGroup : string[]
 }
