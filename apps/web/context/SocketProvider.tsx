@@ -4,7 +4,7 @@ import { io, Socket} from "socket.io-client";
 import { useContext, createContext, useEffect, useState } from "react";
 import { ISocketContext } from "../lib/definitions";
 
-const SocketContext = createContext<ISocketContext>({socket:undefined});
+const SocketContext = createContext<ISocketContext>({socket:undefined, });
 
 export function useSocket(){
     return useContext(SocketContext);
