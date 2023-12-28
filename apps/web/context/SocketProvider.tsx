@@ -2,12 +2,10 @@
 
 import { io, Socket} from "socket.io-client";
 import { useContext, createContext, useEffect, useState } from "react";
+import { ISocketContext } from "../lib/definitions";
+import { initialParams } from "../lib/placeholder-data";
 
-interface ISocketContext {
-    socket: undefined | Socket;
-}
-
-const SocketContext = createContext<ISocketContext>({socket:undefined});
+const SocketContext = createContext<ISocketContext>(initialParams);
 
 export function useSocket(){
     return useContext(SocketContext);
@@ -16,17 +14,18 @@ export function useSocket(){
 export function SocketProvider(
     { children }: { children: React.ReactNode }
 ) {
-    let [socket, setSocket] = useState<Socket | undefined>(undefined);
+    let [socketInstance, setSocketInstance] = useState<Socket | undefined>(undefined);
     useEffect(() => {
-        const newSocket = io("http://localhost:5000");
-        setSocket(newSocket);
+        const newSocket = io("http://localhost:8000");
+        setSocketInstance(newSocket);
         return () => {
             newSocket.disconnect();
+            setSocketInstance(undefined);
         };
     }, []);
 
     return (
-        <SocketContext.Provider value={{ socket }}>
+        <SocketContext.Provider value={{ socket: socketInstance, messageGroup: []}}>
             {children}
         </SocketContext.Provider>
     );
