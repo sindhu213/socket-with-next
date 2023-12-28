@@ -7,18 +7,21 @@ import { initialParams } from "../lib/place-holder";
 const SocketContext = createContext<ISocketContext>(initialParams);
 
 export function useSocket(){
-    return useContext(SocketContext);
+    const {socket, messageGroup} = useContext(SocketContext);
+    if(!socket) throw new Error("Socket is undefined. ");
+    return {socket, messageGroup};
 }
 
 export function SocketProvider(
     {children,}: {children: React.ReactNode;}) 
 {
-    let [socketInstance, setSocketInstance] = useState<Socket | undefined>(undefined);
+    let [socketInstance, setSocketInstance] = useState<Socket | undefined>();
 
+    //only rendered when it mounts since dep array is empty
     useEffect(() => {
-        const _socket = io("http://localhost:8000");
+        const _socket = io("http://localhost:8000"); 
+        console.log("socket instance: " ,_socket.id);
         setSocketInstance(_socket);
-        console.log("SI:" ,_socket.id);
         return () => {
             _socket.disconnect();
             setSocketInstance(undefined);
