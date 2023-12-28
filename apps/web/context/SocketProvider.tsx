@@ -1,8 +1,8 @@
 "use client";
-import { createContext, useEffect, useState, useContext } from "react";
+import { io, Socket} from "socket.io-client";
+import { useContext, createContext, useEffect, useState } from "react";
 import { ISocketContext } from "../lib/definitions";
-import { io, Socket } from "socket.io-client";
-import { initialParams } from "../lib/place-holder";
+import { initialParams } from "../lib/placeholder-data";
 
 const SocketContext = createContext<ISocketContext>(initialParams);
 
@@ -13,23 +13,20 @@ export function useSocket(){
 }
 
 export function SocketProvider(
-    {children,}: {children: React.ReactNode;}) 
-{
-    let [socketInstance, setSocketInstance] = useState<Socket | undefined>();
-
-    //only rendered when it mounts since dep array is empty
+    { children }: { children: React.ReactNode }
+) {
+    let [socketInstance, setSocketInstance] = useState<Socket | undefined>(undefined);
     useEffect(() => {
-        const _socket = io("http://localhost:8000"); 
-        console.log("socket instance: " ,_socket.id);
-        setSocketInstance(_socket);
+        const newSocket = io("http://localhost:8000");
+        setSocketInstance(newSocket);
         return () => {
-            _socket.disconnect();
+            newSocket.disconnect();
             setSocketInstance(undefined);
-        }
-    },[]);
+        };
+    }, []);
 
     return (
-        <SocketContext.Provider value={{socket:socketInstance, messageGroup: []}}>
+        <SocketContext.Provider value={{ socket: socketInstance, messageGroup: []}}>
             {children}
         </SocketContext.Provider>
     );

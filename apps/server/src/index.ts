@@ -11,10 +11,10 @@ const io = new Server(httpServer, {
 io.on("connection", (socket) => {
     console.log("User connected with id:", socket.id);
     socket.on("disconnect", () => {
-        console.log("User disconnected with id:", socket.id);
+        console.log("User disconnected with id: ", socket.id);
     });
     socket.on("message", (incomingMessage) => {
-        console.log(`${socket.id}:${incomingMessage}`);
+        console.log(`${socket.id}: ${incomingMessage}`);
     })
 });
 
