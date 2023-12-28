@@ -10,10 +10,12 @@ export function useSocket() {
     return useContext(SocketContext);
 }
 
-export function SocketProvider({ children }: { children: React.ReactNode }) {
+export function SocketProvider({ children }: { children: React.ReactNode }) 
+{
     let [socketInstance, setSocketInstance] = useState<Socket | undefined>(
         undefined
     );
+    
     useEffect(() => {
         const newSocket = io("http://localhost:8000");
         setSocketInstance(newSocket);
