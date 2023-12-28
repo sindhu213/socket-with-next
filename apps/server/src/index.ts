@@ -9,7 +9,7 @@ const io = new Server(httpServer, {
 });
 
 io.on("connection", (socket) => {
-    console.log("User connected with id: ", socket.id);
+    console.log("User connected with id:", socket.id);
     socket.on("disconnect", () => {
         console.log("User disconnected with id: ", socket.id);
     });
@@ -23,3 +23,4 @@ const PORT = process.env.PORT || 8000;
 httpServer.listen(PORT, () =>
     console.log(`listening on port: http://localhost:${PORT}`)
 );
+
