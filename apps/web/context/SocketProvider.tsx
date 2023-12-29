@@ -27,7 +27,7 @@ export function SocketProvider({ children }: { children: React.ReactNode })
 
     return (
         <SocketContext.Provider
-            value={{ socket: socketInstance, messageGroup: [] }}
+            value={{ socket: socketInstance}}
         >
             {children}
         </SocketContext.Provider>

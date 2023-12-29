@@ -14,8 +14,7 @@ io.on("connection", (socket) => {
         console.log("User disconnected with id: ", socket.id);
     });
     socket.on("message", (incomingMessage) => {
-        console.log(`${socket.id}: ${incomingMessage}`);
-        socket.emit("message", incomingMessage);
+        io.emit("message", incomingMessage);
     })
 });
 
