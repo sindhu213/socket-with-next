@@ -1,19 +1,26 @@
 "use client";
-import { useState  } from "react";
+import { useEffect, useState  } from "react";
 import { useSocket } from "../context/SocketProvider";
 import Messages from "./Messages";
 
 export default function ChatInterface() {
-    const {socket,messageGroup} = useSocket();
+    const {socket} = useSocket();
     const [inputState, setInputState] = useState<string>();
+    const [messageGroup, setMessageGroup] = useState<string[]>([]);
 
-    const handleClick = () => {
+    const handleClick = (e:React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
         if(inputState){
             socket?.emit("message", inputState);
-            messageGroup.push(inputState);
             setInputState("");
         }
     }
+
+    useEffect(() => {
+        socket?.on("message", (incomingMessage) => {
+            setMessageGroup([...messageGroup, incomingMessage]);
+        })
+    });
 
     return (
         <>
